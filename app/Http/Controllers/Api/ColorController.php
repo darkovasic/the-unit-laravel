@@ -40,4 +40,15 @@ class ColorController extends Controller
 
         return response()->json(['message' => 'Color deleted successfully'], 200);
     }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $results = Color::where('name', 'like', "%{$searchTerm}%")
+                        ->orWhere('hex', 'like', "%{$searchTerm}%")
+                        ->get();
+
+        return response()->json($results);
+    }
 }
