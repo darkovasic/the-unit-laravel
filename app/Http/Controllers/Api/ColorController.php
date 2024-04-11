@@ -27,4 +27,17 @@ class ColorController extends Controller
             return response()->json(['error' => 'Failed to create color', 'message' => $error->getMessage()], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        $color = Color::find($id);
+
+        if (!$color) {
+            return response()->json(['error' => 'Color not found'], 404);
+        }
+
+        $color->delete();
+
+        return response()->json(['message' => 'Color deleted successfully'], 200);
+    }
 }
