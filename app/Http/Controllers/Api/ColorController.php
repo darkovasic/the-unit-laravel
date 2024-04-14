@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Models\Color;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\ColorResource;
 
 class ColorController extends Controller
 {
     public function index()
     {
-        return Color::all();
+        return ColorResource::collection(Color::all()); 
     }
 
     public function store(Request $request)
@@ -49,6 +50,6 @@ class ColorController extends Controller
                         ->orWhere('hex', 'like', "%{$searchTerm}%")
                         ->get();
 
-        return response()->json($results);
+        return ColorResource::collection($results); 
     }
 }
